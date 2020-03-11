@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.UserView"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UserView">
+   <children>
+      <Pane layoutY="-4.0" prefHeight="407.0" prefWidth="446.0" />
+      <Button layoutX="493.0" layoutY="20.0" mnemonicParsing="false" text="Create Album" />
+      <Button layoutX="493.0" layoutY="87.0" mnemonicParsing="false" text="Delete Album" />
+      <Button layoutX="493.0" layoutY="175.0" mnemonicParsing="false" text="Rename Album" />
+      <Button layoutX="500.0" layoutY="263.0" mnemonicParsing="false" text="Open Album" />
+   </children>
 </AnchorPane>
