@@ -17,6 +17,7 @@
                   <TextField layoutX="41.0" layoutY="94.0" />
                   <TextField layoutX="225.0" layoutY="94.0" />
                   <TextField layoutX="422.0" layoutY="94.0" />
+                  <Button layoutX="528.0" layoutY="14.0" mnemonicParsing="false" text="Logout" />
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
