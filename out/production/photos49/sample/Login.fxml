@@ -3,10 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Login">
    <children>
-      <Label layoutX="151.0" layoutY="250.0" text="user" />
-      <Label text="password" />
+      <Label layoutX="151.0" layoutY="250.0" text="username" />
+      <Label layoutX="151.0" layoutY="300.0" text="password" />
+      <TextField layoutX="251.0" layoutY="245.0" />
+      <TextField layoutX="251.0" layoutY="295.0" />
+      <Button layoutX="377.0" layoutY="394.0" mnemonicParsing="false" text="Login" />
+      <Button layoutX="206.0" layoutY="394.0" mnemonicParsing="false" text="Create user" />
    </children>
 </AnchorPane>
