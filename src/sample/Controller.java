@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -24,7 +25,7 @@ public class Controller {
     Stage mainStage;
 
 
-    public void start(Stage primaryStage) {
+    public void start(Stage mainStage) {
         this.mainStage = mainStage;
     }
     public void loginButton(ActionEvent e) throws IOException {
@@ -48,6 +49,7 @@ public class Controller {
             try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("AdminView.fxml"));
+
                 AnchorPane root = (AnchorPane) loader.load();
 
 
