@@ -1,14 +1,20 @@
 package sample;
 
 public class User {
+    String name;
     String username;
     String password;
     // perhaps add album information here or make another class, will see later...
 
-    public User(String username, String password) {
+    public User(String name, String username, String password) {
+        this.name = name;
         this.username = username;
         this.password = password;
 
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setUsername(String username) {
@@ -20,6 +26,6 @@ public class User {
     }
 
     public String toString(){
-        return "username is " + username + "password is " + password;
+        return "name is " + name + "username is " + username + "password is " + password;
     }
 }

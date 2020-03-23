@@ -9,19 +9,17 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Button layoutX="125.0" layoutY="192.0" mnemonicParsing="false" text="Create User" />
+                  <Button layoutX="125.0" layoutY="192.0" mnemonicParsing="false" onAction="#createUserButton" text="Create User" />
                   <Button layoutX="383.0" layoutY="192.0" mnemonicParsing="false" text="Delete User" />
-                  <Label layoutX="97.0" layoutY="51.0" text="Name" />
                   <Label layoutX="285.0" layoutY="51.0" text="Username" />
-                  <Label layoutX="482.0" layoutY="51.0" text="Password" />
-                  <TextField layoutX="41.0" layoutY="94.0" />
-                  <TextField layoutX="225.0" layoutY="94.0" />
-                  <TextField layoutX="422.0" layoutY="94.0" />
-                  <Button layoutX="528.0" layoutY="14.0" mnemonicParsing="false" text="Logout" />
+                  <TextField fx:id="userNameField" layoutX="225.0" layoutY="94.0" />
+                  <Button layoutX="528.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutButton" text="Logout" />
+                  <Label layoutX="14.0" layoutY="14.0" text="user:" />
+                  <Label fx:id="adminUserLabel" layoutX="50.0" layoutY="14.0" />
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <ListView prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ListView id="listView" fx:id="listView" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children></AnchorPane>
         </items>
       </SplitPane>

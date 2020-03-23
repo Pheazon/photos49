@@ -10,6 +10,6 @@
       <TextField fx:id="userNameField" layoutX="251.0" layoutY="245.0" />
       <TextField fx:id="passwordField" layoutX="251.0" layoutY="295.0" />
       <Button id="LoginButton" layoutX="377.0" layoutY="394.0" mnemonicParsing="false" onAction="#loginButton" text="Login" />
-      <Button layoutX="206.0" layoutY="394.0" mnemonicParsing="false" text="Create user" />
+      <Button layoutX="206.0" layoutY="394.0" mnemonicParsing="false" onAction="#createUserButton" text="Create user" />
    </children>
 </AnchorPane>
