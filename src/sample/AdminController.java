@@ -36,14 +36,30 @@ public class AdminController {
 
     private ObservableList<String> obsList;
 
-    public void start(Stage mainStage, String userNameField, ArrayList<User> arraylist) { //ArrayList<User> arraylist
+    public void start(Stage mainStage, String userNameField, ArrayList<User> arraylist) {
         this.mainStage = mainStage;
         this.adminUserLabel = adminUserLabel;
-        adminUserLabel.setText(userNameField);
-
         this.arraylist = arraylist;
 
+        adminUserLabel.setText(userNameField);
+
+
         obsList = FXCollections.observableArrayList();
+
+        arraylist = new ArrayList<User>();
+
+        for(int i = 0; i < arraylist.size(); i++){
+            if(arraylist.isEmpty()){
+                break;
+            }
+            obsList.add(arraylist.get(i).username);
+        }
+        listView.setItems(obsList);
+        listView.getSelectionModel().select(0);
+
+        listView
+                .getSelectionModel()
+                .selectedItemProperty();
 
 
 
@@ -101,6 +117,19 @@ public class AdminController {
             addAlert.show();
             return;
         }
+        else if(userNameField.getText().equalsIgnoreCase("admin")){
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("A user cannot be named admin");
+            alert.show();
+        }
+        else {
+            obsList.add(userNameField.getText());
+            listView.setItems(obsList);
+        }
+
+
 
 
     }
