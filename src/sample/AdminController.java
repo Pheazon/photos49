@@ -30,6 +30,7 @@ public class AdminController {
     @FXML
     ListView<String> listView;
     Alert addAlert = new Alert(AlertType.NONE);
+    Alert deleteAlert = new Alert(AlertType.NONE);
 
     ArrayList<User> arraylist;
     Stage mainStage;
@@ -127,12 +128,28 @@ public class AdminController {
         else {
             obsList.add(userNameField.getText());
             listView.setItems(obsList);
+            userNameField.clear();
         }
-
-
-
-
     }
 
+    public void deleteUserButton (ActionEvent e) throws IOException {
+        if(obsList.isEmpty()) {
+            return;
+        }
+        else {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            deleteAlert.setAlertType(AlertType.ERROR);
+            deleteAlert.setContentText("Delete Confirmation "+listView.getSelectionModel().getSelectedItem());
+            deleteAlert.show();
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if(result.get() == ButtonType.OK) {
+                int index = listView.getSelectionModel().getSelectedIndex();
+                System.out.println(index);
+                obsList.remove(index);
+                arraylist.remove(index);
+            }
+        }
+    }
 
 }

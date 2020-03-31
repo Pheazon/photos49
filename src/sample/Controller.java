@@ -21,7 +21,7 @@ import java.util.*;
 
 public class Controller {
     @FXML
-    TextField userNameField, passwordField;
+    TextField userNameField;
     ArrayList<User> arraylist;
 
     Stage mainStage;
@@ -32,11 +32,11 @@ public class Controller {
     }
     public void loginButton(ActionEvent e) throws IOException {
         String user = userNameField.getText();
-        String password = passwordField.getText();
-        if ((user.equals("") || user == null) || (password.equals("") || password == null)) {
+        //String password = passwordField.getText();
+        if ((user.equals("") || user == null)) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setHeaderText("Error");
-            alert.setContentText("Must input a username or password");
+            alert.setContentText("Must input a username");
             alert.show();
             return;
         }
@@ -47,7 +47,7 @@ public class Controller {
 //            alert.show();
 //            return;
 //        }
-        if(user.equalsIgnoreCase("admin") && password.equalsIgnoreCase("admin")){
+        if(user.equalsIgnoreCase("admin")) {
             try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("AdminView.fxml"));

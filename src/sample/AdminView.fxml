@@ -10,7 +10,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
                   <Button layoutX="125.0" layoutY="192.0" mnemonicParsing="false" onAction="#createUserButton" text="Create User" />
-                  <Button layoutX="383.0" layoutY="192.0" mnemonicParsing="false" text="Delete User" />
+                  <Button layoutX="383.0" layoutY="192.0" mnemonicParsing="false" onAction="#deleteUserButton" text="Delete User" />
                   <Label layoutX="285.0" layoutY="51.0" text="Username" />
                   <TextField fx:id="userNameField" layoutX="225.0" layoutY="94.0" />
                   <Button layoutX="528.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutButton" text="Logout" />
