@@ -68,6 +68,28 @@ public class Controller {
                 m.printStackTrace();
             }
         }
+        else if(user.equalsIgnoreCase("hey"))
+        {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("UserView.fxml"));
+
+                AnchorPane root = (AnchorPane) loader.load();
+
+
+                UserViewController listController = loader.getController();
+                listController.start(mainStage);
+
+                Scene scene = new Scene(root);
+                mainStage.setScene(scene);
+                mainStage.setResizable(false);
+                mainStage.show();
+
+
+            } catch (IOException m) {
+                m.printStackTrace();
+            }
+        }
     }
     public void createUserButton(ActionEvent e) throws IOException {
         mainStage.setTitle("creating textInput dialog");
