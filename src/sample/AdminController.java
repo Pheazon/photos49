@@ -46,14 +46,14 @@ public class AdminController {
 
 
         obsList = FXCollections.observableArrayList();
-
-        arraylist = new ArrayList<User>();
+        this.arraylist = arraylist;
 
         for(int i = 0; i < arraylist.size(); i++){
-            if(arraylist.isEmpty()){
-                break;
-            }
-            obsList.add(arraylist.get(i).username);
+            obsList.add(arraylist.get(i).toString());
+//            if(arraylist.isEmpty()){
+//                break;
+//            }
+            //obsList.add(arraylist.get(i).username);
         }
         listView.setItems(obsList);
         listView.getSelectionModel().select(0);
@@ -127,29 +127,24 @@ public class AdminController {
         }
         else {
             obsList.add(userNameField.getText());
+            arraylist.add(new User(userNameField.getText()));
             listView.setItems(obsList);
             userNameField.clear();
+            System.out.println(index);
         }
     }
 
     public void deleteUserButton (ActionEvent e) throws IOException {
+        int index = listView.getSelectionModel().getSelectedIndex();
         if(obsList.isEmpty()) {
             return;
         }
         else {
-            Alert alert = new Alert(AlertType.CONFIRMATION);
-            deleteAlert.setAlertType(AlertType.ERROR);
-            deleteAlert.setContentText("Delete Confirmation "+listView.getSelectionModel().getSelectedItem());
-            deleteAlert.show();
-            Optional<ButtonType> result = alert.showAndWait();
 
-            if(result.get() == ButtonType.OK) {
-                int index = listView.getSelectionModel().getSelectedIndex();
-                System.out.println(index);
+            if (arraylist.size() != 0) {
                 obsList.remove(index);
                 arraylist.remove(index);
             }
         }
     }
-
 }
