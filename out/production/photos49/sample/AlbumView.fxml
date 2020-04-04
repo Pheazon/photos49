@@ -5,24 +5,26 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AlbumViewController">
    <children>
-      <Pane layoutY="46.0" prefHeight="311.0" prefWidth="600.0" />
+      <Pane fx:id="tabel" layoutY="46.0" prefHeight="311.0" prefWidth="600.0">
+         <children>
+            <TableView fx:id="table" prefHeight="311.0" prefWidth="481.0" />
+         </children></Pane>
       <Label layoutX="27.0" layoutY="23.0" text="Album Name:" />
-      <Label layoutX="120.0" layoutY="23.0" />
+      <Label fx:id="name" layoutX="120.0" layoutY="23.0" />
       <TabPane layoutY="357.0" prefHeight="242.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Photo Details">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="138.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" onDragDetected="#editPicture" prefHeight="200.0" prefWidth="138.0">
                      <children>
                         <Label layoutX="22.0" layoutY="33.0" text="Picture Name:" />
                         <Label layoutX="22.0" layoutY="74.0" text="Date:" />
                         <Label layoutX="22.0" layoutY="118.0" text="Caption:" />
-                        <Label layoutX="22.0" layoutY="158.0" text="Album Name:" />
-                        <TextField layoutX="121.0" layoutY="28.0" />
-                        <TextField layoutX="121.0" layoutY="69.0" />
-                        <TextField layoutX="121.0" layoutY="113.0" />
-                        <TextField layoutX="121.0" layoutY="153.0" />
-                        <Button layoutX="415.0" layoutY="93.0" mnemonicParsing="false" text="Edit Picture Details" />
+                        <TextField fx:id="picURL" layoutX="121.0" layoutY="28.0" />
+                        <TextField fx:id="Date" layoutX="121.0" layoutY="69.0" />
+                        <TextField fx:id="caption" layoutX="121.0" layoutY="113.0" />
+                        <Button layoutX="406.0" layoutY="93.0" mnemonicParsing="false" onAction="#editPicture" text="Edit Picture Details" />
+                        <Button layoutX="420.0" layoutY="35.0" mnemonicParsing="false" onAction="#addPicture" text="Add A Picture" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -53,16 +55,15 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
-                            <ChoiceBox layoutX="435.0" layoutY="80.0" prefWidth="150.0" />
+                            <ChoiceBox fx:id="albums" layoutX="435.0" layoutY="80.0" prefWidth="150.0" />
                             <Pane layoutX="3.0" prefHeight="214.0" prefWidth="410.0" />
-                        <Button layoutX="450.0" layoutY="142.0" mnemonicParsing="false" text="Copy" />
+                        <Button fx:id="Pictures" layoutX="450.0" layoutY="142.0" mnemonicParsing="false" onAction="#Copy" text="Copy" />
                         </children></AnchorPane>
                 </content>
             </Tab>
         </tabs>
       </TabPane>
-      <Button layoutX="519.0" layoutY="10.0" mnemonicParsing="false" text="Logout" />
-      <Button layoutX="256.0" layoutY="10.0" mnemonicParsing="false" text="Add A Picture" />
-      <Button layoutX="376.0" layoutY="10.0" mnemonicParsing="false" text="Delete A Picture" />
+      <Button layoutX="519.0" layoutY="10.0" mnemonicParsing="false" onAction="#logoutButton" text="Logout" />
+      <Button layoutX="376.0" layoutY="10.0" mnemonicParsing="false" onAction="#deletePicture" text="Delete A Picture" />
    </children>
 </AnchorPane>

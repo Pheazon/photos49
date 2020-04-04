@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+
 import java.io.*;
 import java.lang.reflect.Array;
 import java.time.Year;
@@ -33,6 +34,7 @@ public class AdminController {
     Alert deleteAlert = new Alert(AlertType.NONE);
 
     ArrayList<User> arraylist;
+
     Stage mainStage;
 
     private ObservableList<String> obsList;
@@ -49,11 +51,8 @@ public class AdminController {
         this.arraylist = arraylist;
 
         for(int i = 0; i < arraylist.size(); i++){
-            obsList.add(arraylist.get(i).toString());
-//            if(arraylist.isEmpty()){
-//                break;
-//            }
-            //obsList.add(arraylist.get(i).username);
+            obsList.add(arraylist.get(i).getUsername());
+
         }
         listView.setItems(obsList);
         listView.getSelectionModel().select(0);
@@ -62,29 +61,7 @@ public class AdminController {
                 .getSelectionModel()
                 .selectedItemProperty();
 
-
-
-//        if ((arraylist.size() != 0)) {
-//            listView.setItems(obsList);
-//            listView.getSelectionModel().select(0);
-//            //userNameField.setText(arraylist.get(0).name);
-//
-//        }
-//        listView
-//                .getSelectionModel()
-//                .selectedIndexProperty()
-//                .addListener(e -> listDetails());
     }
-
-
-//    private void listDetails() {
-//
-//        int index = listView.getSelectionModel().getSelectedIndex();
-//        if (index != -1 && arraylist.size() > index) {
-//            //songShow.setText(arraylist.get(index).name);
-//
-//        }
-//    }
 
     public void logoutButton(ActionEvent e) throws IOException {
         Alert alert = new Alert(AlertType.CONFIRMATION);

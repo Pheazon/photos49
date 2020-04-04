@@ -25,17 +25,20 @@ public class UserViewController
     ListView<String> listView;
     ObservableList<String> obsList;
     ArrayList<String> arrayList;
+    ArrayList<User> Users;
     Stage mainStage;
     Alert deleteAlert = new Alert(Alert.AlertType.NONE);
+    int currentUserIndex;
 
-    public void start(Stage mainStage)
+    public void start(Stage mainStage,  ArrayList<User>user, int currntUsrIndzx)
     {
         this.mainStage = mainStage;
-
+        this.Users = user;
+        currentUserIndex = currntUsrIndzx;
         obsList = FXCollections.observableArrayList();
 
         arrayList = new ArrayList<String>();
-
+        listView.getSelectionModel().select(0);
         for(int i = 0; i < arrayList.size(); i++){
             if(arrayList.isEmpty())
             {
@@ -80,25 +83,25 @@ public class UserViewController
         String result = td.getResult();
         obsList.add(result);
         arrayList.add(result);
-        listView.setItems(obsList);
 
+        listView.setItems(obsList);
+        Users.get(currentUserIndex).addAlbum(result);
         td.show();
         td.close();
+        listView.getSelectionModel().select(0);
 
     }
 
-    public void deleteAlbum(ActionEvent e) throws IOException
-    {
+    public void deleteAlbum(ActionEvent e) throws IOException {
         int index = listView.getSelectionModel().getSelectedIndex();
-        if(obsList.isEmpty())
-        {
+        if (obsList.isEmpty()) {
             return;
-        }
-        else {
+        } else {
 
             if (arrayList.size() != 0) {
                 obsList.remove(index);
                 arrayList.remove(index);
+                Users.get(currentUserIndex).deleteAlbum(index);
             }
         }
     }
@@ -122,6 +125,7 @@ public class UserViewController
                 obsList.add(result);
                 arrayList.add(result);
                 listView.setItems(obsList);
+                Users.get(currentUserIndex).renameAlbum(index,result);
 
                 td.show();
                 td.close();
@@ -134,18 +138,26 @@ public class UserViewController
 
     public void openAlbum(ActionEvent e) throws IOException
     {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("AlbumView.fxml"));
+        int index = listView.getSelectionModel().getSelectedIndex();
+        if(obsList.isEmpty())
+        {
+            return;
+        }
+        else
+        {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("AlbumView.fxml"));
 
-        AnchorPane root = (AnchorPane) loader.load();
+            AnchorPane root = (AnchorPane) loader.load();
 
-       AlbumViewController listController = loader.getController();
-       listController.start(mainStage);
+            AlbumViewController listController = loader.getController();
+            listController.start(mainStage,Users,currentUserIndex,index);
 
-        Scene scene = new Scene(root);
-        mainStage.setScene(scene);
-        mainStage.setResizable(false);
-        mainStage.show();
+            Scene scene = new Scene(root);
+            mainStage.setScene(scene);
+            mainStage.setResizable(false);
+            mainStage.show();
+        }
     }
 
     public void Search(ActionEvent e) throws IOException
