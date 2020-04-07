@@ -1,13 +1,13 @@
 package sample;
 
-import javafx.scene.image.Image;
 
+import java.time.LocalDate;
 public class Images
 {
     private String images;
     private String caption;
-    private String date;
-    public Images(String image,String caption,String date)
+    private LocalDate date;
+    public Images(String image,String caption,LocalDate date)
     {
         this.images = image;
         this.caption = caption;
@@ -31,11 +31,11 @@ public class Images
         this.caption = caption;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }

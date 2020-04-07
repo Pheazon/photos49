@@ -78,7 +78,7 @@ public class AdminController {
             AnchorPane root = (AnchorPane) loader.load();
 
             Controller listController = loader.getController();
-            listController.start(mainStage);
+            listController.start(mainStage,arraylist,obsList);
 
             Scene scene = new Scene(root);
             mainStage.setScene(scene);

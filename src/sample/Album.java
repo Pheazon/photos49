@@ -2,6 +2,7 @@ package sample;
 
 import com.sun.prism.Image;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Album
@@ -37,7 +38,7 @@ public class Album
         this.pictures = pictures;
     }
 
-    public void addPicture(String url, String caption, String date)
+    public void addPicture(String url, String caption, LocalDate date)
     {
         pictures.add(new Images(url,caption, date));
     }

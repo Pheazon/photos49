@@ -21,6 +21,7 @@ public class User {
         this.albums = albums;
     }
 
+
     public void setUsername(String username) {
         this.username = username;
     }

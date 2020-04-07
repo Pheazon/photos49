@@ -24,30 +24,34 @@ public class UserViewController
     @FXML
     ListView<String> listView;
     ObservableList<String> obsList;
+    ObservableList<String> obsList1;
     ArrayList<String> arrayList;
     ArrayList<User> Users;
     Stage mainStage;
     Alert deleteAlert = new Alert(Alert.AlertType.NONE);
     int currentUserIndex;
 
-    public void start(Stage mainStage,  ArrayList<User>user, int currntUsrIndzx)
+    public void start(Stage mainStage,  ObservableList<String> list, ArrayList<User>user, int currntUsrIndzx)
     {
         this.mainStage = mainStage;
         this.Users = user;
+        this.obsList1 = list;
         currentUserIndex = currntUsrIndzx;
         obsList = FXCollections.observableArrayList();
 
         arrayList = new ArrayList<String>();
-        listView.getSelectionModel().select(0);
-        for(int i = 0; i < arrayList.size(); i++){
-            if(arrayList.isEmpty())
+
+        for(int i = 0; i < user.get(currntUsrIndzx).getAlbums().size(); i++){
+            if(user.get(currntUsrIndzx).getAlbums().size() == 0)
             {
                 break;
             }
-            obsList.add(arrayList.get(i));
+            obsList.add(user.get(currntUsrIndzx).getAlbums().get(i).getName());
         }
         listView.setItems(obsList);
+        listView.getSelectionModel().select(0);
     }
+
 
     public void logoutButton(ActionEvent e) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -64,7 +68,7 @@ public class UserViewController
             AnchorPane root = (AnchorPane) loader.load();
 
             Controller listController = loader.getController();
-            listController.start(mainStage);
+            listController.start(mainStage,Users,obsList1);
 
             Scene scene = new Scene(root);
             mainStage.setScene(scene);
@@ -82,7 +86,7 @@ public class UserViewController
         Optional<String> result1 = td.showAndWait();
         String result = td.getResult();
         obsList.add(result);
-        arrayList.add(result);
+        //arrayList.add(result);
 
         listView.setItems(obsList);
         Users.get(currentUserIndex).addAlbum(result);
@@ -94,15 +98,17 @@ public class UserViewController
 
     public void deleteAlbum(ActionEvent e) throws IOException {
         int index = listView.getSelectionModel().getSelectedIndex();
-        if (obsList.isEmpty()) {
+        if (obsList.isEmpty())
+        {
             return;
         } else {
 
-            if (arrayList.size() != 0) {
+            if (obsList.size() != 0)
+            {
                 obsList.remove(index);
-                arrayList.remove(index);
                 Users.get(currentUserIndex).deleteAlbum(index);
             }
+
         }
     }
 
@@ -115,7 +121,7 @@ public class UserViewController
         }
         else
         {
-            if(arrayList.size() != 0 )
+            if(obsList.size() != 0 )
             {
                 TextInputDialog td = new TextInputDialog();
                 td.getResult();
@@ -123,7 +129,6 @@ public class UserViewController
                 Optional<String> result1 = td.showAndWait();
                 String result = td.getResult();
                 obsList.add(result);
-                arrayList.add(result);
                 listView.setItems(obsList);
                 Users.get(currentUserIndex).renameAlbum(index,result);
 
@@ -132,7 +137,6 @@ public class UserViewController
             }
         }
         obsList.remove(index);
-        arrayList.remove(index);
 
     }
 

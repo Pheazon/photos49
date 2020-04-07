@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,14 +24,16 @@ public class Controller {
     @FXML
     TextField userNameField;
     ArrayList<User> arraylist;
+    ObservableList<String> obsList;
 
     Stage mainStage;
 
 
-    public void start(Stage mainStage)
+    public void start(Stage mainStage,  ArrayList<User> arrayList,ObservableList<String>obsList)
     {
         this.mainStage = mainStage;
-        arraylist = new ArrayList<>();
+        this.arraylist = arrayList;
+        this.obsList = obsList;
 
     }
     public void loginButton(ActionEvent e) throws IOException
@@ -70,7 +73,7 @@ public class Controller {
         {
             for(int i=0;i<arraylist.size();i++)
                 if(arraylist.get(i).getUsername().equalsIgnoreCase(user)) {
-                    System.out.println("homos");
+
                     try {
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(getClass().getResource("UserView.fxml"));
@@ -79,7 +82,7 @@ public class Controller {
 
 
                         UserViewController listController = loader.getController();
-                        listController.start(mainStage,arraylist, i);
+                        listController.start(mainStage,obsList,arraylist, i);
 
                         Scene scene = new Scene(root);
                         mainStage.setScene(scene);

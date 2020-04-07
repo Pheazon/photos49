@@ -2,6 +2,8 @@ package sample;
 
 import javafx.scene.image.ImageView;
 
+import java.time.LocalDate;
+
 /**
  * TableRow is used to get the outline for the table used to display thumbnails of the images.
  * @author user
@@ -11,8 +13,8 @@ public class TableRow {
     private ImageView image;
     private String name;
     private String pathName;
-    private String date;
-    TableRow(ImageView img, String name, String pathName, String date)
+    private LocalDate date;
+    TableRow(ImageView img, String name, String pathName, LocalDate date)
     {
         this.image = img;
         this.name = name;
@@ -24,7 +26,7 @@ public class TableRow {
         this.image = img;
         name = "";
         pathName = "";
-        date = "";
+        date = null;
     }
 
     public void setImage(ImageView value) {
@@ -43,11 +45,11 @@ public class TableRow {
         return name;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
