@@ -172,7 +172,7 @@ public class UserViewController
         AnchorPane root = (AnchorPane) loader.load();
 
         SearchViewController listController = loader.getController();
-        listController.start(mainStage);
+        listController.start(mainStage,Users,currentUserIndex);
 
         Scene scene = new Scene(root);
         mainStage.setScene(scene);
