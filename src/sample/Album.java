@@ -3,12 +3,15 @@ package sample;
 import com.sun.prism.Image;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Album
+public class Album implements Serializable
 {
     private String name;
     private ArrayList<Images> pictures;
+
 
     public Album(String n)
     {
@@ -38,10 +41,19 @@ public class Album
         this.pictures = pictures;
     }
 
-    public void addPicture(String url, String caption, LocalDate date)
+    public Images getPicture(int index)
+    {
+        return this.pictures.get(index);
+    }
+    public int size()
+    {
+        return pictures.size();
+    }
+    public void addPicture(String url, String caption, LocalDateTime date)
     {
         pictures.add(new Images(url,caption, date));
     }
+
 
     public void deletePicture(int index)
     {

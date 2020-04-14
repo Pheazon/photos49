@@ -1,3 +1,7 @@
+/**
+ * @author Haseeb Balal
+ * @author Muffalal Hussain
+ */
 package sample;
 
 import javafx.beans.Observable;
@@ -20,6 +24,10 @@ import java.io.*;
 import java.time.Year;
 import java.util.*;
 
+/**
+ * This is the class for the login controller, this is the first screen the user will see
+ * and can either login as admin or create an account and login as a user
+ */
 public class Controller {
     @FXML
     TextField userNameField;
@@ -34,12 +42,32 @@ public class Controller {
         this.mainStage = mainStage;
         this.arraylist = arrayList;
         this.obsList = obsList;
+        mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                                        @Override
+                                        public void handle(WindowEvent windowEvent) {
+                                            try {
+                                                for(int i=0;i<arraylist.size();i++)
+                                                {
+                                                }
+                                                Main.writeApp(arraylist);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+        );
 
     }
+
+    /**
+     * This method is for the login button, a user can either login as an admin or regular user
+     * @param e
+     * @throws IOException
+     */
     public void loginButton(ActionEvent e) throws IOException
     {
         String user = userNameField.getText();
-        if ((user.equals("") || user == null))
+        if (( user == null ||  user.equals("")))
         {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setHeaderText("Error");
@@ -96,19 +124,46 @@ public class Controller {
                 }
         }
     }
+
+    /**
+     * This is the create user button, a user can enter a username allowing them to create their username to login with
+     * @param e
+     * @throws IOException
+     */
     public void createUserButton(ActionEvent e) throws IOException {
         //ArrayList<String> list = new ArrayList<String>();
         String user = userNameField.getText();
-        if ((user.equals("") || user == null)) {
+        if (( user == null) || user.equals("")) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setHeaderText("Error");
             alert.setContentText("Must input a username");
             alert.show();
             return;
         }
+        else if(user.equalsIgnoreCase("admin")){
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText("Error");
+            alert.setContentText("Admin name is reserved");
+            alert.show();
+        }
         else{
-            arraylist.add(new User(user));
-            userNameField.clear();
+            boolean addUserName = true;
+            for(int i = 0; i< arraylist.size(); i++) {
+                if(arraylist.get(i).getUsername().equalsIgnoreCase(userNameField.getText()))
+                {
+                    addUserName = false;
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Already exist");
+                    alert.showAndWait();
+                    break;
+                }
+            }
+            if(addUserName)
+            {
+                arraylist.add(new User(userNameField.getText()));
+                userNameField.clear();
+            }
         }
     }
 }

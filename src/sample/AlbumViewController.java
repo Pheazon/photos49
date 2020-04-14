@@ -18,7 +18,8 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.time.LocalDate;
@@ -31,16 +32,25 @@ public class AlbumViewController
     @FXML
     TextField caption;
     @FXML
+    TextField tagName;
+    @FXML
+    TextField tagValue;
+    @FXML
      Label Username;
     @FXML
      ChoiceBox <String> CopyPictures;
     @FXML
     ChoiceBox <String> CopyAlbums;
-
+    @FXML
+    ChoiceBox <String> tagPictures;
     @FXML
     ChoiceBox <String> MovePictures;
     @FXML
     ChoiceBox <String> MoveAlbums;
+    @FXML
+     ListView tagNameList;
+    @FXML
+    ListView tagValueList;
 
 
 
@@ -94,6 +104,7 @@ public class AlbumViewController
         date.setMaxWidth(200);
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
+
         //TableRow item_1 = new TableRow(imageView,"s","aa","d");
       //  TableRow item_2 = new TableRow(imageView1,"s","aa","d");
         table.getColumns().addAll(image,name,pathName,date);
@@ -103,7 +114,7 @@ public class AlbumViewController
             ImageView tempImageView = new ImageView(new Image(new FileInputStream(temp.getImages())));
             tempImageView.setFitWidth(100);
             tempImageView.setFitHeight(100);
-            TableRow item = new TableRow(tempImageView,temp.getCaption(),temp.getImages(),temp.getDate());
+            TableRow item = new TableRow(tempImageView,temp.getCaption(),temp.getImages(),temp.getDate(),temp.getTagNameArray(), temp.getTagValueArray());
             photos.add(item);
         }
 
@@ -126,11 +137,22 @@ public class AlbumViewController
         }
         CopyPictures.getItems().addAll(pictureList);
         MovePictures.getItems().addAll(pictureList);
+        tagPictures.getItems().addAll(pictureList);
          //photos.add(item_1);
          //photos.add(item_2);
 
         //table.setItems(photos);
         table.setItems(photos);
+        if(table.getItems() != null && table.getItems().size() > 0)
+            addTag(0);
+        table.getSelectionModel().selectedIndexProperty()
+                .addListener(e ->
+                        {
+                            if(table.getItems() != null && table.getItems().size() > 0)
+                                addTag(table.getSelectionModel().getSelectedIndex());
+                        }
+                        );
+
 
     }
     public void Back() throws IOException {
@@ -152,30 +174,45 @@ public class AlbumViewController
     }
     public void addPicture() throws FileNotFoundException
     {
-
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        if(picURL.getText().isEmpty())
+        {
+            errorAlert.setContentText("Empty path Name");
+            errorAlert.showAndWait();
+            return;
+        }
+        if(caption.getText().isEmpty())
+        {
+            caption.setText("");
+        }
         String url = picURL.getText();
         String cap = caption.getText();
         ImageView imageView = new ImageView(new Image(new FileInputStream(url)));
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
 
-        TableRow item_1 = new TableRow(imageView,cap,url,java.time.LocalDate.now());
-        Users.get(userIndex).getAlbums().get(albumIndex).addPicture(url,cap,java.time.LocalDate.now());
+        TableRow item_1 = new TableRow(imageView,cap,url,java.time.LocalDateTime.now(), new ArrayList<String>(), new ArrayList<String>());
+        Users.get(userIndex).getAlbums().get(albumIndex).addPicture(url,cap,java.time.LocalDateTime.now());
         pictureList.add(url);
         CopyPictures.getItems().add(url);
         MovePictures.getItems().add(url);
+        tagPictures.getItems().add(url);
         photos.add(item_1);
         table.setItems(photos);
         picURL.clear();
         caption.clear();
-        table.getSelectionModel().select(0);
+        table.getSelectionModel().select(Users.get(userIndex).getAlbums().get(albumIndex).getPictures().size()-1);
+        addTag(Users.get(userIndex).getAlbums().get(albumIndex).getPictures().size()-1);
     }
 
     public void deletePicture()
     {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         int index = table.getSelectionModel().getSelectedIndex();
         if(photos.isEmpty())
         {
+            errorAlert.setContentText("Empty text");
+            errorAlert.showAndWait();
             return;
         }
         else {
@@ -186,29 +223,34 @@ public class AlbumViewController
                 pictureList.remove(index);
                 CopyPictures.setItems(pictureList);
                 MovePictures.setItems(pictureList);
+                tagPictures.setItems(pictureList);
             }
         }
     }
 
     public void editPicture() throws FileNotFoundException
     {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         int index = table.getSelectionModel().getSelectedIndex();
 
         String cap = photos.get(index).getName();
 
-        if(!cap.equals(caption.getText()))
+        if(cap.equals(caption.getText()))
         {
-            System.out.println(caption.getText());
-            System.out.println("cap is" + cap);
-            cap = caption.getText();
+            errorAlert.setContentText("Same caption already");
+            errorAlert.showAndWait();
+            return;
         }
 
         if(photos.isEmpty())
         {
+            errorAlert.setContentText("Empty List");
+            errorAlert.showAndWait();
             return;
         }
         else
         {
+            cap= caption.getText();
             if(photos.size() != 0)
             {
                 Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(index).setCaption(cap);
@@ -220,8 +262,9 @@ public class AlbumViewController
                     photos.add(new TableRow(image,
                             Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(i).getCaption(),
                             Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(i).getImages(),
-                            Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(i).getDate())
-                    );
+                            Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(i).getDate(),
+                            Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(i).getTagNameArray(),
+                            Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(i).getTagValueArray()));
                 }
             table.setItems(photos);
             }
@@ -255,7 +298,7 @@ public class AlbumViewController
             }
         }
         String caption = Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(tempPicIndex).getCaption();
-        LocalDate date = Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(tempPicIndex).getDate();
+        LocalDateTime date = Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(tempPicIndex).getDate();
         Users.get(userIndex).getAlbums().get(tempAlbumIndex).addPicture(pictureSelected,caption,date);
 
     }
@@ -286,7 +329,7 @@ public class AlbumViewController
             }
         }
         String caption = Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(tempPicIndex).getCaption();
-        LocalDate date = Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(tempPicIndex).getDate();
+        LocalDateTime date = Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(tempPicIndex).getDate();
         Users.get(userIndex).getAlbums().get(tempAlbumIndex).addPicture(pictureSelected,caption,date);
         Users.get(userIndex).getAlbums().get(albumIndex).deletePicture(tempPicIndex);
         photos.remove(tempPicIndex);
@@ -294,8 +337,80 @@ public class AlbumViewController
         CopyPictures.setItems(pictureList);
         MovePictures.setItems(pictureList);
     }
+    public void addTagButton() {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        if(tagName.getText().isEmpty() || tagValue.getText().isEmpty() || tagPictures.getValue().isEmpty())
+        {
+            errorAlert.setContentText("Empty text");
+            errorAlert.showAndWait();
+            return;
+        }
 
+        int tempPicIndex = 0;
+        String pictureSelected = tagPictures.getValue();
+        for(int i = 0 ; i<Users.get(userIndex).getAlbums().get(albumIndex).getPictures().size(); i++)
+        {
+            if(Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(i).getImages().equals(pictureSelected))
+            {
+                tempPicIndex = i;
+                break;
+            }
+        }
+        if(!Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(tempPicIndex).addTag(tagName.getText(),tagValue.getText()))
+        {
+            return;
+        }
+        addTag(tempPicIndex);
+    }
+    public void addTag(int tempPicIndex)
+    {
+        ObservableList<String> tagNameObsList = FXCollections.observableArrayList();
+        ObservableList<String> tagValueObsList = FXCollections.observableArrayList();
+        for (int i = 0; i < Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(tempPicIndex).tagSize();i++) {
+            tagNameObsList.add(Users.get(userIndex).getAlbums().get(albumIndex).getPicture(tempPicIndex).getTagName(i));
+            tagValueObsList.add(Users.get(userIndex).getAlbums().get(albumIndex).getPicture(tempPicIndex).getTagValue(i));
+        }
+        table.getSelectionModel().select(tempPicIndex);
+        tagNameList.setItems(tagNameObsList);
+        tagValueList.setItems(tagValueObsList);
+        tagValue.clear();
+        tagName.clear();
 
+    }
+
+    public void deleteTag()
+    {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        int pictureSelected1 = table.getSelectionModel().getSelectedIndex();
+        String pictureSelected = table.getItems().get(pictureSelected1).getPathName();
+        System.out.println(pictureSelected);
+        int selectedName= tagNameList.getSelectionModel().getSelectedIndex();
+        int selectedValue = tagValueList.getSelectionModel().getSelectedIndex();
+        int tempPicIndex = 0;
+        for(int i = 0 ; i<Users.get(userIndex).getAlbums().get(albumIndex).getPictures().size(); i++)
+        {
+            if(Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(i).getImages().equals(pictureSelected))
+            {
+                tempPicIndex = i;
+                break;
+            }
+        }
+        if(tagValueList.getSelectionModel().getSelectedIndex() ==-1 || tagNameList.getSelectionModel().getSelectedIndex() ==-1)
+        {
+            errorAlert.setContentText("There are no tags to remove");
+            errorAlert.showAndWait();
+            return;
+        }
+        if(selectedName != selectedValue)
+        {
+            errorAlert.setContentText("Not correct pair of tags selected");
+            errorAlert.showAndWait();
+            return;
+        }
+        Users.get(userIndex).getAlbums().get(albumIndex).getPictures().get(tempPicIndex).deleteTag(selectedName);
+        addTag(tempPicIndex);
+
+    }
     public void toSlideShow(ActionEvent e ) throws Exception
     {
         FXMLLoader loader = new FXMLLoader();

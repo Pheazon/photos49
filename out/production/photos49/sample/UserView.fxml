@@ -12,13 +12,11 @@
       <Label layoutX="45.0" layoutY="321.0" text="Album Name:" />
       <Label layoutX="181.0" layoutY="321.0" text="Number of photos:" />
       <Label layoutX="324.0" layoutY="321.0" text="Date Range:" />
-      <Label layoutX="431.0" layoutY="321.0" />
-      <Label layoutX="45.0" layoutY="359.0" />
-      <Label layoutX="183.0" layoutY="359.0" />
-      <Label layoutX="324.0" layoutY="359.0" />
-      <Label layoutX="431.0" layoutY="359.0" />
       <Button layoutX="530.0" layoutY="7.0" mnemonicParsing="false" onAction="#logoutButton" text="Logout" />
       <Button layoutX="515.0" layoutY="286.0" mnemonicParsing="false" onAction="#Search" text="Search" />
       <ListView fx:id="listView" prefHeight="319.0" prefWidth="482.0" />
+      <Label fx:id="AlbumName" layoutX="68.0" layoutY="356.0" />
+      <Label fx:id="numberOfPhotos" layoutX="218.0" layoutY="356.0" />
+      <Label fx:id="dateRange" layoutX="343.0" layoutY="356.0" />
    </children>
 </AnchorPane>

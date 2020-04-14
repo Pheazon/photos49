@@ -31,12 +31,14 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="502.0" layoutY="86.0" mnemonicParsing="false" text="Search" />
+                        <Button layoutX="498.0" layoutY="47.0" mnemonicParsing="false" onAction="#SearchByTag" text="Search" />
                         <Label layoutX="30.0" layoutY="39.0" text="Enter Tag" />
                         <Label layoutX="30.0" layoutY="134.0" text="Enter Tag" />
-                        <TextField layoutX="95.0" layoutY="34.0" />
-                        <TextField layoutX="95.0" layoutY="129.0" />
-                        <ChoiceBox layoutX="283.0" layoutY="86.0" prefWidth="150.0" />
+                        <TextField fx:id="firstTagValue" layoutX="95.0" layoutY="34.0" />
+                        <TextField fx:id="secondTagValue" layoutX="95.0" layoutY="129.0" />
+                        <ChoiceBox fx:id="choice" layoutX="314.0" layoutY="44.0" prefWidth="150.0" />
+                        <Button layoutX="498.0" layoutY="139.0" mnemonicParsing="false" onAction="#CreateAlbumTag" text="Create Album" />
+                        <TextField fx:id="albumName" layoutX="315.0" layoutY="139.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

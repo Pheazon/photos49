@@ -1,9 +1,9 @@
 package sample;
 
-
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
 
     String username;
     ArrayList<Album> albums;
