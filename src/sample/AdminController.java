@@ -7,22 +7,16 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.time.Year;
 import java.util.*;
 
 /**
@@ -53,10 +47,11 @@ public class AdminController {
     }
 
     /**
-     *
-     * @param mainStage
-     * @param userNameField
-     * @param arraylist
+     * Creates a list of all the users that has been created already and then allows you to select one from the table to
+     * delete it or add a new user.
+     * @param mainStage sending next scene
+     * @param userNameField Getting which user logged on
+     * @param arraylist getting the list of all usernames that have created an account
      */
     public void start(Stage mainStage, String userNameField, ArrayList<User> arraylist) {
         this.mainStage = mainStage;
@@ -95,8 +90,8 @@ public class AdminController {
 
             AnchorPane root = (AnchorPane) loader.load();
 
-            Controller listController = loader.getController();
-            listController.start(mainStage,arraylist,obsList);
+            LoginController listLoginController = loader.getController();
+            listLoginController.start(mainStage,arraylist,obsList);
 
             Scene scene = new Scene(root);
             mainStage.setScene(scene);

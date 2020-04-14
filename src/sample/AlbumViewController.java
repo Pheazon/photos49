@@ -1,3 +1,7 @@
+/**
+ * @author Haseeb Balal
+ * @author Muffalal Hussain
+ */
 package sample;
 
 import java.io.FileInputStream;
@@ -18,11 +22,10 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.time.LocalDate;
+
 public class AlbumViewController
 {
     @FXML
@@ -53,18 +56,47 @@ public class AlbumViewController
     ListView tagValueList;
 
 
-
+    /**
+     * List of the users to send everywhere
+     */
     ObservableList<String> obsList;
+    /**
+     * list of the all the pictures into a tablerow format
+     */
     ObservableList<TableRow> photos;
+    /**
+     *list of the albums in the user
+     */
     ObservableList<String> albumNames;
+    /**
+     *List of the pictures
+     */
     ObservableList<String> pictureList;
+    /**
+     * list of the users
+     */
     ArrayList<User>Users;
+    /**
+     *the current user selected
+     */
     int userIndex;
+    /**
+     * the current album selected
+     */
     int albumIndex;
 
     Stage mainStage;
 
-
+    /**
+     *Creates a table which is empty or with what ever picture that is added into it already. Storing data into the
+     * array list
+     *
+     * @param mainStage the stage which is selected
+     * @param users The user list
+     * @param userIndex the current user index from the users
+     * @param albumIndex the current album index
+     * @throws FileNotFoundException
+     */
     public void start(Stage mainStage,ArrayList<User>users,int userIndex,int albumIndex) throws FileNotFoundException
     {
         this.albumIndex = albumIndex;
@@ -72,16 +104,6 @@ public class AlbumViewController
         this.Users = users;
         Username.setText(users.get(userIndex).getAlbums().get(albumIndex).getName());
         this.mainStage = mainStage;
-
-        ImageView imageView = new ImageView(new Image(new FileInputStream("D:/Project2/photo1.jpg")) );
-        imageView.setFitWidth(100);
-        imageView.setFitHeight(100);
-
-        ImageView imageView1 = new ImageView(new Image(new FileInputStream("D:/Project2/photo2.jpg")) );
-        imageView.setFitWidth(100);
-        imageView.setFitHeight(100);
-
-       //DateLabel = new LocalDate();
 
         obsList = FXCollections.observableArrayList();
         photos = FXCollections.observableArrayList();
@@ -105,8 +127,6 @@ public class AlbumViewController
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
 
-        //TableRow item_1 = new TableRow(imageView,"s","aa","d");
-      //  TableRow item_2 = new TableRow(imageView1,"s","aa","d");
         table.getColumns().addAll(image,name,pathName,date);
         for(int i = 0;i<users.get(userIndex).getAlbums().get(albumIndex).getPictures().size();i++)
         {
@@ -138,10 +158,7 @@ public class AlbumViewController
         CopyPictures.getItems().addAll(pictureList);
         MovePictures.getItems().addAll(pictureList);
         tagPictures.getItems().addAll(pictureList);
-         //photos.add(item_1);
-         //photos.add(item_2);
 
-        //table.setItems(photos);
         table.setItems(photos);
         if(table.getItems() != null && table.getItems().size() > 0)
             addTag(0);
@@ -155,6 +172,11 @@ public class AlbumViewController
 
 
     }
+
+    /**
+     * Goes back to the Userview fxml with the data saved
+     * @throws IOException
+     */
     public void Back() throws IOException {
         ObservableList<String> obsList = FXCollections.observableArrayList();
         for(int i=0;i<Users.size();i++)
@@ -172,6 +194,11 @@ public class AlbumViewController
         mainStage.setResizable(false);
         mainStage.show();
     }
+
+    /**
+     * This adds a picture into the album and puts it into the table
+     * @throws FileNotFoundException
+     */
     public void addPicture() throws FileNotFoundException
     {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -205,6 +232,9 @@ public class AlbumViewController
         addTag(Users.get(userIndex).getAlbums().get(albumIndex).getPictures().size()-1);
     }
 
+    /**
+     * Deletes a picture which is selected from the table
+     */
     public void deletePicture()
     {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -228,6 +258,10 @@ public class AlbumViewController
         }
     }
 
+    /**
+     * edits the caption of the picture
+     * @throws FileNotFoundException
+     */
     public void editPicture() throws FileNotFoundException
     {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -272,6 +306,10 @@ public class AlbumViewController
         }
         caption.clear();
     }
+
+    /**
+     * Copies a picture from the current album into a different album
+     */
     public void Copy()
     {
         int tempAlbumIndex = 0;
@@ -303,6 +341,10 @@ public class AlbumViewController
 
     }
 
+    /**
+     * Moves the picture selected from the current album and deletes it from there and moves it into the album that
+     * user wants to move it to.
+     */
     public void Move()
     {
         int tempAlbumIndex = 0;
@@ -337,6 +379,10 @@ public class AlbumViewController
         CopyPictures.setItems(pictureList);
         MovePictures.setItems(pictureList);
     }
+
+    /**
+     * Adds a tag if it is a valid statement provided and goes to the addTag to be displayed
+     */
     public void addTagButton() {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         if(tagName.getText().isEmpty() || tagValue.getText().isEmpty() || tagPictures.getValue().isEmpty())
@@ -362,6 +408,11 @@ public class AlbumViewController
         }
         addTag(tempPicIndex);
     }
+
+    /**
+     * Displays the tags that were created on two list views of tagName and tagValue
+     * @param tempPicIndex the index of which picture is selected
+     */
     public void addTag(int tempPicIndex)
     {
         ObservableList<String> tagNameObsList = FXCollections.observableArrayList();
@@ -378,6 +429,9 @@ public class AlbumViewController
 
     }
 
+    /**
+     * Deletes the tag of the picture
+     */
     public void deleteTag()
     {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -411,6 +465,12 @@ public class AlbumViewController
         addTag(tempPicIndex);
 
     }
+
+    /**
+     * Goes to the slideshow fxml that shows all the pictures of the album
+     * @param e
+     * @throws Exception
+     */
     public void toSlideShow(ActionEvent e ) throws Exception
     {
         FXMLLoader loader = new FXMLLoader();
@@ -426,6 +486,12 @@ public class AlbumViewController
         mainStage.setResizable(false);
         mainStage.show();
     }
+
+    /**
+     * Logouts of the user and saves the data which the user did
+     * @param e
+     * @throws IOException
+     */
     public void logoutButton(ActionEvent e) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Logout");
@@ -440,8 +506,8 @@ public class AlbumViewController
 
             AnchorPane root = (AnchorPane) loader.load();
 
-            Controller listController = loader.getController();
-            listController.start(mainStage,Users,obsList);
+            LoginController listLoginController = loader.getController();
+            listLoginController.start(mainStage,Users,obsList);
 
             Scene scene = new Scene(root);
             mainStage.setScene(scene);

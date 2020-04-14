@@ -1,3 +1,8 @@
+/**
+ * @author Haseeb Balal
+ * @author Muffalal Hussain
+ */
+
 package sample;
 
 import javafx.collections.FXCollections;
@@ -11,7 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -41,14 +45,39 @@ public class SearchViewController
     @FXML
      ChoiceBox<String> choice;
 
+    /**
+     * The list of Users from object of User
+     */
     ArrayList<User> Users;
+
+    /**
+     * gets the current user index
+     */
     int userIndex;
+
+    /**
+     * gets the current album index
+     */
     int albumIndex;
+
+    /**
+     * gets the list of users
+     */
     ObservableList<String> obsList;
+
+    /**
+     * gets the tablerow of photos created
+     */
     ObservableList<TableRow> photos;
 
     Stage mainStage;
 
+    /**
+     * Creates a table which is already empty and asks to filer with either search date or tag
+     * @param mainStage the scene selected
+     * @param users the users of arraylist created with User object created in it
+     * @param userIndex the current user index
+     */
     public void start(Stage mainStage,ArrayList<User>users,int userIndex)
     {
         this.mainStage = mainStage;
@@ -79,6 +108,10 @@ public class SearchViewController
         table.getColumns().addAll(image,name,pathName,date);
     }
 
+    /**
+     * checks if the dates are a valid input and then goes to tabledisplay for the date search
+     * @throws IOException
+     */
     public void Search() throws IOException
     {
         if(StartDate.getValue() == null || EndDate.getValue() == null)
@@ -92,6 +125,10 @@ public class SearchViewController
         TableDisplay(StartDate.getValue(),EndDate.getValue());
     }
 
+    /**
+     * checks if the tags are a valid input and then goes to tabledisplay for the date search
+     * @throws IOException
+     */
     public void SearchByTag() throws IOException
     {
         if(firstTagValue.getText().isEmpty() || secondTagValue.getText().isEmpty() || choice.getValue().isEmpty())
@@ -100,6 +137,13 @@ public class SearchViewController
         }
         TableDisplay(firstTagValue.getText(),secondTagValue.getText());
     }
+
+    /**
+     * Displays the search result of tagValues that are presented and shown if the valid ones are shown
+     * @param tagOne the first tagValue
+     * @param tagTwo the second tagValue
+     * @throws IOException
+     */
     public void TableDisplay(String tagOne, String tagTwo) throws  IOException
     {
         photos = FXCollections.observableArrayList();
@@ -152,6 +196,13 @@ public class SearchViewController
         }
         table.setItems(photos);
     }
+
+    /**
+     * Displays the search result of the two dates range of the valid search
+     * @param startDate the intial date
+     * @param endDate the end date
+     * @throws FileNotFoundException
+     */
     public void TableDisplay(LocalDate startDate,LocalDate endDate) throws FileNotFoundException {
         photos = FXCollections.observableArrayList();
         LocalDateTime start = startDate.atStartOfDay();
@@ -178,6 +229,9 @@ public class SearchViewController
         table.setItems(photos);
     }
 
+    /**
+     * Creates an album with the search result of the date search
+     */
     public void CreateAlbum()
     {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -203,6 +257,10 @@ public class SearchViewController
             Users.get(userIndex).getAlbums().get(Users.get(userIndex).getAlbums().size()-1).addPicture(photos.get(i).getPathName(),photos.get(i).getName(),photos.get(i).getDate());
        AlbumName.clear();
     }
+
+    /**
+     * Creates an album with the search result of the tag names
+     */
     public void CreateAlbumTag()
     {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -234,6 +292,10 @@ public class SearchViewController
         albumName.clear();
     }
 
+    /**
+     * Goes back to the albumm view fmxl
+     * @throws IOException
+     */
     public void Back() throws IOException {
         ObservableList<String> obsList = FXCollections.observableArrayList();
         for (int i = 0; i < Users.size(); i++)
@@ -251,6 +313,12 @@ public class SearchViewController
         mainStage.setResizable(false);
         mainStage.show();
     }
+
+    /**
+     * logouts of the user
+     * @param e
+     * @throws IOException
+     */
     public void logoutButton(ActionEvent e) throws IOException {
         ObservableList<String> obsList = FXCollections.observableArrayList();
         for(int i=0;i<Users.size();i++)
@@ -262,14 +330,13 @@ public class SearchViewController
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             System.out.println("logout");
-            //Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Login.fxml"));
 
             AnchorPane root = (AnchorPane) loader.load();
 
-            Controller listController = loader.getController();
-            listController.start(mainStage,Users,obsList);
+            LoginController listLoginController = loader.getController();
+            listLoginController.start(mainStage,Users,obsList);
 
             Scene scene = new Scene(root);
             mainStage.setScene(scene);

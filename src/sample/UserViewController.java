@@ -1,6 +1,9 @@
+/**
+ * @author Haseeb Balal
+ * @author Muffalal Hussain
+ */
 package sample;
 
-import com.sun.javafx.iio.ios.IosDescriptor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,11 +12,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -28,14 +29,44 @@ public class UserViewController
     Label numberOfPhotos;
     @FXML
     Label dateRange;
+    /**
+     * the list of users
+     */
     ObservableList<String> obsList;
+
+    /**
+     * list of users
+     */
+
     ObservableList<String> obsList1;
+    /**
+     * list
+     */
+
     ArrayList<String> arrayList;
+    /**
+     * temporarily array list
+     */
     ArrayList<User> Users;
+
     Stage mainStage;
+    /**
+     * alert message
+     */
     Alert deleteAlert = new Alert(Alert.AlertType.NONE);
+    /**
+     * current user placer
+     */
     int currentUserIndex;
 
+
+    /**
+     *
+     * @param mainStage the scene which it is currenly
+     * @param list the list of users
+     * @param user The list of users of User arraylist
+     * @param currentUser current user index
+     */
     public void start(Stage mainStage,  ObservableList<String> list, ArrayList<User>user, int currentUser)
     {
         this.mainStage = mainStage;
@@ -75,9 +106,6 @@ public class UserViewController
                         oldestIndex = i;
                     }
 
-                //System.out.println("LATEST TIME IS " + users.get(userIndex).getAlbum().get(albumListView.getSelectionModel().getSelectedIndex()).getImages().get(latestIndex).getDate().toString());
-                //System.out.println("OLDEST TIME IS " + users.get(userIndex).getAlbum().get(albumListView.getSelectionModel().getSelectedIndex()).getImages().get(oldestIndex).getDate().toString());
-
                 dateRange.setText(Users.get(currentUserIndex).getAlbums().get(listView.getSelectionModel().getSelectedIndex()).getPictures().get(oldestIndex).getDate().toString()
                         + "\n to \n" +
                         Users.get(currentUserIndex).getAlbums().get(listView.getSelectionModel().getSelectedIndex()).getPictures().get(latestIndex).getDate().toString());
@@ -89,6 +117,11 @@ public class UserViewController
     }
 
 
+    /**
+     * logouts of the user
+     * @param e
+     * @throws IOException
+     */
     public void logoutButton(ActionEvent e) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Logout");
@@ -97,14 +130,13 @@ public class UserViewController
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             System.out.println("logout");
-            //Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Login.fxml"));
 
             AnchorPane root = (AnchorPane) loader.load();
 
-            Controller listController = loader.getController();
-            listController.start(mainStage,Users,obsList1);
+            LoginController listLoginController = loader.getController();
+            listLoginController.start(mainStage,Users,obsList1);
 
             Scene scene = new Scene(root);
             mainStage.setScene(scene);
@@ -114,6 +146,11 @@ public class UserViewController
         }
     }
 
+    /**
+     * Creates a new album
+     * @param e
+     * @throws IOException
+     */
     public void createAlbum(ActionEvent e) throws IOException
     {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -134,7 +171,7 @@ public class UserViewController
         {
             for(int i =0; i <obsList.size();i++)
             {
-                if(obsList.get(i).equals(result))
+                if(obsList.get(i).equals(result.get()))
                 {
                    errorAlert.setContentText("Album name already created");
                    errorAlert.showAndWait();
@@ -151,6 +188,11 @@ public class UserViewController
 
     }
 
+    /**
+     * delets the album
+     * @param e
+     * @throws IOException
+     */
     public void deleteAlbum(ActionEvent e) throws IOException {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         int index = listView.getSelectionModel().getSelectedIndex();
@@ -171,6 +213,11 @@ public class UserViewController
         }
     }
 
+    /**
+     * renames the album
+     * @param e
+     * @throws IOException
+     */
     public void renameAlbum(ActionEvent e) throws IOException
     {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -212,6 +259,11 @@ public class UserViewController
 
     }
 
+    /**
+     * Goes to albumview fxml
+     * @param e
+     * @throws IOException
+     */
     public void openAlbum(ActionEvent e) throws IOException
     {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -239,6 +291,11 @@ public class UserViewController
         }
     }
 
+    /**
+     * Goes to search fxml
+     * @param e
+     * @throws IOException
+     */
     public void Search(ActionEvent e) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();

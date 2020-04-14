@@ -4,39 +4,48 @@
  */
 package sample;
 
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.*;
-import java.time.Year;
 import java.util.*;
 
 /**
  * This is the class for the login controller, this is the first screen the user will see
  * and can either login as admin or create an account and login as a user
  */
-public class Controller {
+public class LoginController {
     @FXML
     TextField userNameField;
+
+    /**
+     * The list of users in the arraylist
+     */
     ArrayList<User> arraylist;
+
+    /**
+     * List of the users to send everywhere
+     */
     ObservableList<String> obsList;
 
     Stage mainStage;
 
 
+    /**
+     *Creates a login page for the user to log in to a user or create a user
+     * @param mainStage The stage selected for the scene
+     * @param arrayList the list of Users of Users arraylist
+     * @param obsList the list of users
+     */
     public void start(Stage mainStage,  ArrayList<User> arrayList,ObservableList<String>obsList)
     {
         this.mainStage = mainStage;
@@ -49,7 +58,7 @@ public class Controller {
                                                 for(int i=0;i<arraylist.size();i++)
                                                 {
                                                 }
-                                                Main.writeApp(arraylist);
+                                                Photos.writeApp(arraylist);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
