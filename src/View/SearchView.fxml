@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SearchViewController">
+   <children>
+      <Pane layoutY="300.0" prefHeight="300.0" prefWidth="600.0">
+         <children>
+            <TableView fx:id="table" layoutX="14.0" layoutY="14.0" prefHeight="241.0" prefWidth="567.0" />
+         </children></Pane>
+      <TabPane layoutY="33.0" prefHeight="279.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Search by date">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="167.0" prefWidth="456.0">
+                     <children>
+                        <Label layoutX="56.0" layoutY="59.0" text="Start Date:" />
+                        <Label layoutX="56.0" layoutY="150.0" text="End Date:" />
+                        <DatePicker fx:id="StartDate" layoutX="120.0" layoutY="54.0" />
+                        <DatePicker fx:id="EndDate" layoutX="112.0" layoutY="145.0" />
+                        <Button layoutX="155.0" layoutY="202.0" mnemonicParsing="false" onAction="#Search" text="Search" />
+                        <Button layoutX="456.0" layoutY="171.0" mnemonicParsing="false" onAction="#CreateAlbum" text="Create Album" />
+                        <TextField fx:id="AlbumName" layoutX="426.0" layoutY="111.0" />
+                        <Label layoutX="277.0" layoutY="4.0" text="Search for a picture" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Search by tag">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="498.0" layoutY="47.0" mnemonicParsing="false" onAction="#SearchByTag" text="Search" />
+                        <Label layoutX="30.0" layoutY="39.0" text="Enter Tag" />
+                        <Label layoutX="30.0" layoutY="134.0" text="Enter Tag" />
+                        <TextField fx:id="firstTagValue" layoutX="95.0" layoutY="34.0" />
+                        <TextField fx:id="secondTagValue" layoutX="95.0" layoutY="129.0" />
+                        <ChoiceBox fx:id="choice" layoutX="314.0" layoutY="44.0" prefWidth="150.0" />
+                        <Button layoutX="498.0" layoutY="139.0" mnemonicParsing="false" onAction="#CreateAlbumTag" text="Create Album" />
+                        <TextField fx:id="albumName" layoutX="315.0" layoutY="139.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Button layoutX="533.0" layoutY="1.0" mnemonicParsing="false" onAction="#logoutButton" text="Logout" />
+      <Button layoutX="14.0" layoutY="1.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+   </children>
+</AnchorPane>

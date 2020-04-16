@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SlideShowController">
+   <children>
+      <Button layoutX="36.0" layoutY="29.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+      <Button layoutX="513.0" layoutY="29.0" mnemonicParsing="false" onAction="#logoutButton" text="Logout" />
+      <Button layoutX="486.0" layoutY="347.0" mnemonicParsing="false" onAction="#nextPicture" text="Next Picture" />
+      <Button layoutX="31.0" layoutY="347.0" mnemonicParsing="false" onAction="#previousPicture" text="Previous Picture" />
+      <ImageView fx:id="Image" fitHeight="297.0" fitWidth="379.0" layoutX="111.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="273.0" layoutY="20.0" text="SlideShow" />
+      <Label fx:id="Username" layoutX="200.0" layoutY="20.0" prefHeight="18.0" prefWidth="48.0" />
+   </children>
+</AnchorPane>
